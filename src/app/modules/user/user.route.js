@@ -1,10 +1,10 @@
 const express = require("express");
-const { createUser, getUser } = require("./user.controller");
-const { checkUserName } = require("../../middlewares/checkUserName");
+const { getActiveUsers, getAllUsers, getAverageAgeGenderBased } = require("./user.controller");
 
 const router = express.Router();
 
-router.get("/", getUser);
-router.post("/", checkUserName, createUser);
+router.get("/all-users", getAllUsers);
+router.get("/active-users", getActiveUsers);
+router.get("/gender-average-age", getAverageAgeGenderBased);
 
 module.exports = router;

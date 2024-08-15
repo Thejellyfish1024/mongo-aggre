@@ -1,12 +1,12 @@
-const { createUserService, getUsersService } = require("./user.service");
+const { getActiveUsersService, getAllUsersService, getAverageAgeGenderBasedService } = require("./user.service");
 
-exports.createUser= async (req, res) =>{
+exports.getActiveUsers= async (req, res) =>{
     try {
-        const data = req.body;
-        const result = await createUserService(data);
+       
+        const result = await getActiveUsersService();
         return res.status(200).json({
             status: "Success",
-            message: "User created successful",
+            message: "User fetched successful",
             data: result,
           });
 
@@ -18,10 +18,30 @@ exports.createUser= async (req, res) =>{
           });
     }
 }
-exports.getUser= async (req, res) =>{
+
+exports.getAllUsers= async (req, res) =>{
     try {
        
-        const result = await getUsersService();
+        const result = await getAllUsersService();
+        return res.status(200).json({
+            status: "Success",
+            message: "User fetched successful",
+            data: result,
+          });
+
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            message: "Something went wrong!!",
+            error: error,
+          });
+    }
+}
+
+exports.getAverageAgeGenderBased= async (req, res) =>{
+    try {
+       
+        const result = await getAverageAgeGenderBasedService();
         return res.status(200).json({
             status: "Success",
             message: "User fetched successful",
