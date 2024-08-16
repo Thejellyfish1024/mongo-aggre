@@ -165,6 +165,71 @@ exports.getMultipleFIlteringService = async () => {
 
     return result;
 }
+// Filtering with regex query
+exports.getRegexQueryService = async () => {
+    const result = await User.aggregate(
+        [
+            {
+                $match: {
+                    "company.phone": /\+1\s?\(940\)/  // regex query for +1 (940)
+                },
+            }
+        ]
+    );
+
+    return result;
+}
+
+exports.getAllUsersService = async () => {
+    const result = await User.find({});
+    return result;
+}
+
+// Sorting method - Last 5 registered users
+exports.getLastFiveUsersWithSortingService = async () => {
+    const result = await User.aggregate(
+        [
+            {
+                $sort: {
+                    registered: -1
+                }
+            },
+            {
+                $limit: 5
+            },
+            {
+                $project: {
+                    name: 1,
+                    age: 1,
+                    registered: 1
+                }
+            }
+        ]
+    );
+
+    return result;
+}
+
+// Sorting method - Last 5 registered users
+exports.getCategorizedUsersService = async () => {
+    const result = await User.aggregate(
+        [
+            {
+                $group: {
+                    _id: "$favoriteFruit",
+                    users: {
+                        $push: {             // ($push : "$name") for single element 
+                            name: "$name",
+                            age: "$age"
+                        }
+                    }
+                }
+            }
+        ]
+    );
+
+    return result;
+}
 
 exports.getAllUsersService = async () => {
     const result = await User.find({});
