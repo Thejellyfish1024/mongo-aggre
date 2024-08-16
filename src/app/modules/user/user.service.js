@@ -127,6 +127,45 @@ exports.getAverageTagsCountService = async () => {
     return { result1, result2 };
 }
 
+// Filtering with tags array element
+exports.getArrayElementFilteringService = async () => {
+    const result = await User.aggregate(
+        [
+            {
+                $match: {
+                    tags: "enim"
+                }
+            },
+            {
+                $count: 'totalUserWithEnimTag'
+            }
+        ]
+    );
+
+    return result;
+}
+// Filtering with tags array element and isActive false and using project
+exports.getMultipleFIlteringService = async () => {
+    const result = await User.aggregate(
+        [
+            {
+                $match: {
+                    isActive: false,
+                    tags: "velit",
+                },
+            },
+            {
+                $project: {
+                    name: 1,
+                    age: 1,
+                },
+            },
+        ]
+    );
+
+    return result;
+}
+
 exports.getAllUsersService = async () => {
     const result = await User.find({});
     return result;

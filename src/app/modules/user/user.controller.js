@@ -1,4 +1,4 @@
-const { getActiveUsersService, getAllUsersService, getAverageAgeGenderBasedService, getFavoriteFruitService, getTopUsersByCountryService, getAverageTagsCountService } = require("./user.service");
+const { getActiveUsersService, getAllUsersService, getAverageAgeGenderBasedService, getFavoriteFruitService, getTopUsersByCountryService, getAverageTagsCountService, getArrayElementFilteringService, getMultipleFIlteringService } = require("./user.service");
 
 exports.getActiveUsers= async (req, res) =>{
     try {
@@ -98,6 +98,43 @@ exports.getAverageTagsCount= async (req, res) =>{
     try {
        
         const result = await getAverageTagsCountService();
+        return res.status(200).json({
+            status: "Success",
+            message: "User fetched successful",
+            data: result,
+          });
+
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            message: "Something went wrong!!",
+            error: error,
+          });
+    }
+}
+
+exports.getArrayElementFiltering= async (req, res) =>{
+    try {
+       
+        const result = await getArrayElementFilteringService();
+        return res.status(200).json({
+            status: "Success",
+            message: "User fetched successful",
+            data: result,
+          });
+
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            message: "Something went wrong!!",
+            error: error,
+          });
+    }
+}
+exports.getMultipleFIltering= async (req, res) =>{
+    try {
+       
+        const result = await getMultipleFIlteringService();
         return res.status(200).json({
             status: "Success",
             message: "User fetched successful",
