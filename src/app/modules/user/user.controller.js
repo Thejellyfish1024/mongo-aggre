@@ -1,4 +1,4 @@
-const { getActiveUsersService, getAllUsersService, getAverageAgeGenderBasedService, getFavoriteFruitService, getTopUsersByCountryService, getAverageTagsCountService, getArrayElementFilteringService, getMultipleFIlteringService, getRegexQueryService, getLastFiveUsersWithSortingService, getCategorizedUsersService } = require("./user.service");
+const { getActiveUsersService, getAllUsersService, getAverageAgeGenderBasedService, getFavoriteFruitService, getTopUsersByCountryService, getAverageTagsCountService, getArrayElementFilteringService, getMultipleFIlteringService, getRegexQueryService, getLastFiveUsersWithSortingService, getCategorizedUsersService, getFilteringWithArrayPositionService } = require("./user.service");
 
 exports.getActiveUsers = async (req, res) => {
     try {
@@ -189,6 +189,24 @@ exports.getCategorizedUsers = async (req, res) => {
     try {
 
         const result = await getCategorizedUsersService();
+        return res.status(200).json({
+            status: "Success",
+            message: "User fetched successful",
+            data: result,
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            message: "Something went wrong!!",
+            error: error,
+        });
+    }
+}
+exports.getFilteringWithArrayPosition = async (req, res) => {
+    try {
+
+        const result = await getFilteringWithArrayPositionService();
         return res.status(200).json({
             status: "Success",
             message: "User fetched successful",

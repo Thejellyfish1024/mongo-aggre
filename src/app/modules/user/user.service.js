@@ -1,5 +1,11 @@
 const User = require("./user.model");
 
+
+exports.getAllUsersService = async () => {
+    const result = await User.find({});
+    return result;
+}
+
 // get total active users count service
 exports.getActiveUsersService = async () => {
     const result = await User.aggregate([
@@ -145,6 +151,16 @@ exports.getArrayElementFilteringService = async () => {
     return result;
 }
 // Filtering with tags array element and isActive false and using project
+// for multiple element filtering 
+// [
+//     {
+//         $match: {
+//             "tags": {
+//                 $all: ["enim", "id"]
+//             }
+//         }
+//     }
+// ]
 exports.getMultipleFIlteringService = async () => {
     const result = await User.aggregate(
         [
@@ -154,6 +170,7 @@ exports.getMultipleFIlteringService = async () => {
                     tags: "velit",
                 },
             },
+
             {
                 $project: {
                     name: 1,
@@ -231,7 +248,19 @@ exports.getCategorizedUsersService = async () => {
     return result;
 }
 
-exports.getAllUsersService = async () => {
-    const result = await User.find({});
+// Find the elements which has ad in the second position of tags array
+exports.getFilteringWithArrayPositionService = async () => {
+    const result = await User.aggregate(
+        [
+            {
+                $match: {
+                    "tags.1": "ad"
+                }
+            }
+        ]
+    );
+
     return result;
 }
+
+
